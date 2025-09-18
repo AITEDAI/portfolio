@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 코드 생성기</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- qrcode.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+        }
+        .container {
+            max-width: 500px;
+        }
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            min-height: 250px;
+        }
+        #qrcode-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="container bg-white p-8 rounded-2xl shadow-xl space-y-6 text-center">
+        <h1 class="text-3xl font-bold text-gray-800">QR 코드 생성기</h1>
+        <p class="text-gray-600">텍스트나 URL을 입력하고 실시간으로 QR 코드를 만드세요.</p>
+        
+        <!-- 입력 필드 -->
+        <div class="relative">
+            <input 
+                type="text" 
+                id="text-input" 
+                placeholder="여기에 텍스트 또는 URL을 입력하세요..." 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            />
+        </div>
+
+        <!-- QR 코드가 표시될 컨테이너 -->
+        <div 
+            id="qrcode-container" 
+            class="bg-gray-100 p-4 rounded-lg border-2 border-dashed border-gray-300"
+        >
+            <p id="placeholder-text" class="text-gray-400">QR 코드가 여기에 표시됩니다.</p>
+        </div>
+
+        <button 
+            id="download-button"
+            class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 opacity-50 cursor-not-allowed"
+            disabled
+        >
+            QR 코드 다운로드
+        </button>
+    </div>
+
+    <script>
+        // DOM 요소 가져오기
+        const textInput = document.getElementById('text-input');
+        const qrcodeContainer = document.getElementById('qrcode-container');
+        const placeholderText = document.getElementById('placeholder-text');
+        const downloadButton = document.getElementById('download-button');
+        
+        let qrcode = null;
+
+        // 입력 필드에 변화가 있을 때마다 QR 코드 생성
+        textInput.addEventListener('input', () => {
+            const text = textInput.value.trim();
+
+            // 기존 QR 코드 초기화
+            qrcodeContainer.innerHTML = '';
+
+            if (text === '') {
+                // 입력 값이 없으면 플레이스홀더 텍스트 표시
+                qrcodeContainer.appendChild(placeholderText);
+                downloadButton.disabled = true;
+                downloadButton.classList.add('opacity-50', 'cursor-not-allowed');
+                downloadButton.classList.remove('hover:bg-blue-700');
+            } else {
+                // QR 코드 생성
+                qrcode = new QRCode(qrcodeContainer, {
+                    text: text,
+                    width: 250,
+                    height: 250,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                downloadButton.disabled = false;
+                downloadButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                downloadButton.classList.add('hover:bg-blue-700');
+            }
+        });
+
+        // 다운로드 버튼 클릭 이벤트
+        downloadButton.addEventListener('click', () => {
+            if (!qrcode) return;
+            
+            // QR 코드를 이미지 데이터로 변환
+            const canvas = qrcodeContainer.querySelector('canvas');
+            if (canvas) {
+                const imageUrl = canvas.toDataURL("image/png");
+                const link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = 'qrcode.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
