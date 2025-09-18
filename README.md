@@ -1,3 +1,6 @@
 ## 포트폴리오
-- 이력사항
-- 엔터테이너: 
+
+
+## 라이브 데모
+- 포트폴리오 사이트: https://aitedai.github.io/portfolio/INDEX.HTML
+- 두더지 게임: 
