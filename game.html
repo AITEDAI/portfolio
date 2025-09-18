@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 박훈용- AI 임베디드 개발자 포트폴리오</title>
+    <style>
+        /* CSS 변수를 사용하여 색상 관리를 용이하게 합니다. */
+        :root {
+            --primary-color: #333;
+            --secondary-color: #555;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --card-background: #ffffff;
+            --highlight-color: #007bff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            width: 80%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        /* 네비게이션 바 스타일 */
+        .navbar {
+            background: rgba(51, 51, 51, 0.9);
+            color: #fff;
+            padding: 0.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: flex-end; /* 로고를 삭제했으므로 메뉴를 오른쪽으로 정렬합니다. */
+            align-items: center;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .navbar ul li a {
+            color: #fff;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: var(--highlight-color);
+        }
+        
+        /* 헤더 스타일 */
+        header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 8rem 0 4rem 0; /* 네비게이션 바 뒤에 콘텐츠가 오도록 패딩 조정 */
+            text-align: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin: 0.5rem 0;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+        section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+        }
+
+        /* 기술 스택 스타일 */
+        #skills .skill-category-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        #skills .skill-category {
+            width: 30%;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        #skills h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--highlight-color);
+            padding-left: 10px;
+        }
+        #skills ul {
+            list-style: none;
+            padding: 0;
+        }
+        #skills ul li {
+            background: #e2e2e2;
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        /* 프로젝트 스타일 개선 */
+        .project-item {
+            background: var(--card-background);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .project-image {
+            width: 40%;
+            flex-shrink: 0;
+        }
+        .project-image img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .project-description {
+            width: 60%;
+        }
+        .project-item h3 {
+            margin-top: 0;
+            color: var(--highlight-color);
+        }
+        .project-item a {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .project-item a:hover {
+            background: var(--highlight-color);
+        }
+
+        /* 두더지 게임 스타일 */
+        #game {
+            background: #fafafa;
+        }
+        .game-container {
+            text-align: center;
+        }
+        .game-controls {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .game-controls button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--highlight-color);
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .game-controls button:hover {
+            background-color: #0056b3;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            background: #a56a42; /* 땅 색상 */
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .hole {
+            background: #442d1b; /* 구멍 색상 */
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+        .mole {
+            /* 두더지 모양 */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%235C4033"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/><ellipse cx="50" cy="65" rx="15" ry="10" fill="%23D2B48C"/></svg>');
+            background-size: 80%;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            bottom: -100%;
+            transition: all 0.2s;
+        }
+        .hole.up .mole {
+            bottom: 0;
+        }
+
+
+        /* 연락처 및 푸터 스타일 */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: var(--primary-color);
+            color: #fff;
+        }
+        footer p {
+            margin: 0 0 1rem 0;
+        }
+        footer a {
+            color: #fff;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: var(--highlight-color);
+        }
+        
+        /* 모바일 반응형 디자인 */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            .navbar .container {
+                flex-direction: column;
+            }
+            .navbar ul {
+                margin-top: 10px;
+            }
+            #skills .skill-category-container {
+                flex-direction: column;
+            }
+            #skills .skill-category {
+                width: 100%;
+            }
+            .project-item {
+                flex-direction: column;
+            }
+            .project-image, .project-description {
+                width: 100%;
+            }
+            .game-board {
+                width: 240px;
+                height: 240px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 상단 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#game">Game</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 헤더: 자기 소개 -->
+    <header>
+        <div class="container">
+            <!-- 이 곳에 자신의 프로필 사진을 넣으세요. 예: <img src="profile.jpg" ...> -->
+            <img src="https://placehold.co/150x150/EFEFEF/333333?text=Profile" alt="프로필 사진" class="profile-img">
+            <h1>박훈용</h1>
+            <p>저전력 임베디드 환경에서 실시간 AI 모델을 구현하고 최적화하는 개발자</p>
+            <p>#엣지AI #모델경량화 #NPU가속 #실시간시스템</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- 기술 스택 -->
+        <section id="skills">
+            <div class="container">
+                <h2>🛠️ 기술 스택</h2>
+                <div class="skill-category-container">
+                    <div class="skill-category">
+                        <h3>AI / Machine Learning</h3>
+                        <ul>
+                            <li>TensorFlow Lite</li><li>PyTorch Mobile</li><li>ONNX Runtime</li><li>Model Quantization</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Embedded Systems</h3>
+                        <ul>
+                            <li>C / C++</li><li>Python</li><li>RTOS</li><li>NVIDIA Jetson</li><li>ARM Cortex-M</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools</h3>
+                        <ul>
+                            <li>Git</li><li>Docker</li><li>CMake</li><li>Yocto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 프로젝트 -->
+        <section id="projects">
+            <div class="container">
+                <h2>🚀 대표 프로젝트</h2>
+                
+                <article class="project-item">
+                    <div class="project-image">
+                        <!-- 프로젝트 시연 GIF나 결과 이미지를 추가하세요. -->
+                        <img src="https://placehold.co/600x400/CCCCCC/FFFFFF?text=Project+GIF/Image" alt="프로젝트1 시연">
+                    </div>
+                    <div class="project-description">
+                        <h3>엣지 디바이스를 위한 실시간 객체 탐지 시스템</h3>
+                        <p><strong>문제점:</strong> 네트워크 연결이 불안정한 야외 환경에서 실시간으로 객체를 탐지해야 하는 요구사항<br>
+                        <strong>해결책:</strong> NVIDIA Jetson Nano 보드에 경량화된 YOLOv5 모델을 포팅하여, 엣지 단에서 독립적으로 작동하는 객체 탐지 시스템을 구축했습니다.</p>
+                        <p><strong>주요 역할 및 기술:</strong>
+                            <ul>
+                                <li>YOLOv5s 모델 TensorRT 변환 및 최적화로 추론 속도 30% 향상</li>
+                                <li>MIPI-CSI 카메라 드라이버 연동 및 GStreamer 파이프라인 구축</li>
+                            </ul>
+                        </p>
+                        <a href="[GitHub 저장소 주소]" target="_blank">GitHub에서 코드 보기</a>
+                    </div>
+                </article>
+
+                <article class="project-item">
+                    <div class="project-image">
+                        <img src="https://placehold.co/600x400/CCCCCC/FFFFFF?text=Project+GIF/Image" alt="프로젝트2 시연">
+                    </div>
+                    <div class="project-description">
+                        <h3>마이크로컨트롤러 기반 음성 명령 인식 장치</h3>
+                        <p><strong>문제점:</strong> 기존 스마트홈 기기의 음성인식은 개인정보 유출 우려와 느린 반응 속도<br>
+                        <strong>해결책:</strong> ARM Cortex-M4 코어(STM32)에서 동작하는 TinyML 기반의 키워드 인식(KWS) 모델을 개발하여, 오프라인 환경에서 빠르고 안전하게 동작하는 시스템을 구현했습니다.</p>
+                        <p><strong>주요 역할 및 기술:</strong>
+                            <ul>
+                                <li>TensorFlow Lite for Microcontrollers를 사용하여 KWS 모델 포팅</li>
+                                <li>PDM 마이크 인터페이스 및 오디오 전처리 알고리즘 구현</li>
+                            </ul>
+                        </p>
+                        <a href="[GitHub 저장소 주소]" target="_blank">GitHub에서 코드 보기</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 두더지 잡기 게임 -->
+        <section id="game">
+            <div class="container game-container">
+                <h2>🎮 두더지 잡기 게임</h2>
+                <div class="game-controls">
+                    <span>점수: <span id="score">0</span></span> | 
+                    <span>남은 시간: <span id="time-left">20</span></span>
+                </div>
+                <button id="start-game">게임 시작</button>
+                <div class="game-board">
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                    <div class="hole"><div class="mole"></div></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 연락처 -->
+    <footer id="contact">
+        <div class="container">
+            <h2>📞 연락하기</h2>
+            <p>아래 채널을 통해 편하게 연락주세요.</p>
+            <div>
+                <a href="mailto:your_email@example.com">이메일</a> |
+                <a href="[GitHub 프로필 주소]" target="_blank">GitHub</a> |
+                <a href="[LinkedIn 프로필 주소]" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // 두더지 게임 로직
+    document.addEventListener('DOMContentLoaded', () => {
+        const holes = document.querySelectorAll('.hole');
+        const moles = document.querySelectorAll('.mole');
+        const scoreBoard = document.querySelector('#score');
+        const timeLeftBoard = document.querySelector('#time-left');
+        const startButton = document.querySelector('#start-game');
+
+        let lastHole;
+        let timeUp = false;
+        let score = 0;
+        let timeLeft = 20;
+        let gameTimerId;
+        let countdownTimerId;
+
+        function randomTime(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+
+        function randomHole(holes) {
+            const idx = Math.floor(Math.random() * holes.length);
+            const hole = holes[idx];
+            if (hole === lastHole) {
+                return randomHole(holes);
+            }
+            lastHole = hole;
+            return hole;
+        }
+
+        function peep() {
+            const time = randomTime(400, 1000);
+            const hole = randomHole(holes);
+            hole.classList.add('up');
+            setTimeout(() => {
+                hole.classList.remove('up');
+                if (!timeUp) peep();
+            }, time);
+        }
+
+        function startGame() {
+            scoreBoard.textContent = 0;
+            score = 0;
+            timeLeft = 20;
+            timeLeftBoard.textContent = timeLeft;
+            timeUp = false;
+            startButton.disabled = true;
+
+            peep();
+
+            countdownTimerId = setInterval(() => {
+                timeLeft--;
+                timeLeftBoard.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimerId);
+                    timeUp = true;
+                    startButton.disabled = false;
+                    alert('게임 종료! 최종 점수: ' + score);
+                }
+            }, 1000);
+        }
+
+        function bonk(e) {
+            if (!e.isTrusted) return; // cheat prevention
+            score++;
+            this.parentNode.classList.remove('up');
+            scoreBoard.textContent = score;
+        }
+
+        moles.forEach(mole => mole.addEventListener('click', bonk));
+        startButton.addEventListener('click', startGame);
+    });
+</script>
+</body>
+</html>
+
